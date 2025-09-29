@@ -34,10 +34,8 @@ def winner_checker_tic_tac_toe(board_dictionary :dict):
         value3 = board_dictionary[list[2]]
         if value1 == value2 and value2 == value3:
             if value1 == "X":
-                print("Player 1 wins")
                 return 1
             elif value2 == "O":
-                print("Player 2 wins")
                 return 2
             else:
                 continue
@@ -93,7 +91,8 @@ def two_player_tic_tac_toe(game_count :int, player_list :list[str]):
             board[input_player] = "O"
         turn += 1
         boardgame_printer(board)
-        game_is_over = winner_checker_tic_tac_toe(board)
+        if turn > 5:
+            game_is_over = winner_checker_tic_tac_toe(board)
     if game_is_over == 1:
         print(player_list[1], "has won!")
         winner = player_list [1]
@@ -114,7 +113,7 @@ def main ():
     game_count = 1
     extra_game = True
     player_count = int(is_count_valid())
-    player_list= ["Christopher","Dimitri"]
+    player_list= ["Christopher","Dmytro"]
     while extra_game:
         if player_count == 1:
             print("Het spel zal beginnen met 1 Speler")
@@ -122,9 +121,9 @@ def main ():
         else:
             print("Het spel zal beginnen met 2 Spelers")
             player_list = two_player_tic_tac_toe(game_count,player_list)
-    extra_game = is_extra_game()
-    if extra_game:
-        game_count += 1
+        extra_game = is_extra_game()
+        if extra_game:
+            game_count += 1
 
 if __name__ == "__main__":
     main()
