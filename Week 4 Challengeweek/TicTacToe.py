@@ -1,3 +1,4 @@
+import random
 
 def boardgame_printer(board_dictionary :dict):
     print(board_dictionary["A1"],'|',board_dictionary["A2"],"|",board_dictionary["A3"])
@@ -37,8 +38,6 @@ def winner_checker_tic_tac_toe(board_dictionary :dict):
                 return "1"
             elif value2 == "O":
                 return "0"
-            elif " " not in board_dictionary:
-                return "3"
             else:
                 continue
     return False            
@@ -56,6 +55,7 @@ def is_count_valid():
         else:
             print("input error")
  
+
 def is_extra_game():
     extra_game_input = input("One more game?")
     extra_game_input_lower = extra_game_input.lower()
@@ -64,14 +64,23 @@ def is_extra_game():
         return False
     return True
     
+
 def single_player_tic_tac_toe():
     print("WIP")
 
-def leaderboard(player_list :list[str]):
-    winner = player_list[1]
-    loser = player_list[0]
 
-def two_player_tic_tac_toe(game_count :int, player_list :list[str]):
+def leaderboard_tic_tac_toe(player_list :list[str], game_count :int, is_winner :bool, current_leaderboard :list[str]):
+    if game_count == 1:
+        start_leaderboard = current_leaderboard
+    else:
+        if is_winner == True:
+            current_leaderboard.append
+
+
+
+
+
+def two_player_tic_tac_toe(game_count : int, player_list : list[str],current_leaderboard : list[str]):
     board = {
     "A1":" ",
     "A2":" ",
@@ -99,19 +108,28 @@ def two_player_tic_tac_toe(game_count :int, player_list :list[str]):
         boardgame_printer(board)
         if turn > 5:
             game_is_over = winner_checker_tic_tac_toe(board)
-        if turn == 9:
+        if turn == 10:
             break
     if game_is_over == "1":
         print(player_list[1], "has won!")
+        is_winner = True
         winner = player_list [1]
         loser = player_list[0]
     elif game_is_over == "0":
         print(player_list[0], "has won!")
+        is_winner = True
         winner = player_list [0]
         loser = player_list[1]
         player_list = [loser,winner]
     else: 
+        is_winner = False
         print("The game is a tie!")
+        randomnumber1 = random.randint(0,1)
+        randomnumber2 = (randomnumber1 + 1) % 2
+        player_1 = player_list[randomnumber1]
+        player_2 = player_list[randomnumber2]
+        player_list =  [player_2,player_1]
+
     return player_list
 
 
@@ -158,9 +176,15 @@ def main ():
             print("Het spel zal beginnen met 2 Spelers")
             if game_count == 1:
                 name_p1 = is_name_valid("player 1")
-                name_p2 = is_name_valid("player 2")
+                name_p2 = is_name_valid("player 2")            
                 player_list = [name_p2,name_p1]
-            player_list = two_player_tic_tac_toe(game_count,player_list)
+                randomnumber1 = random.randint(0,1)
+                randomnumber2 = (randomnumber1 + 1) % 2
+                player_1 = player_list[randomnumber1]
+                player_2 = player_list[randomnumber2]
+                player_order_list =  [player_2,player_1]
+                leaderboard_list = ["TIC TAC TOE Leaderboard",name_p1,name_p2]
+            player_order_list = two_player_tic_tac_toe(game_count,player_order_list,leaderboard_list)
         extra_game = is_extra_game()
         if extra_game:
             game_count += 1
