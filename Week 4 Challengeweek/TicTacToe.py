@@ -10,7 +10,7 @@ def boardgame_printer(board_dictionary :dict):
 
 def game_input_checker(input_string :str, board_dictionary :dict):
     valid_list = ["A1","A2","A3","B1","B2","B3","C1","C2","C3"]
-    if input_string in valid_list:
+    if input_string.upper() in valid_list:
         if board_dictionary[input_string] == " ":
             return True
         else:
@@ -36,7 +36,7 @@ def winner_checker_tic_tac_toe(board_dictionary :dict):
         if value1 == value2 and value2 == value3:
             if value1 == "X":
                 return "1"
-            elif value2 == "O":
+            elif value1 == "O":
                 return "0"
             else:
                 continue
@@ -57,7 +57,7 @@ def is_count_valid():
  
 
 def is_extra_game():
-    extra_game_input = input("One more game?")
+    extra_game_input = input("One more game? ")
     extra_game_input_lower = extra_game_input.lower()
     if extra_game_input_lower == "no":
         extra_game = False
@@ -70,14 +70,23 @@ def single_player_tic_tac_toe():
 
 
 def leaderboard_tic_tac_toe(player_list :list[str], game_count :int, is_winner :bool, current_leaderboard :list[str]):
-    if game_count == 1:
-        start_leaderboard = current_leaderboard
+    if is_winner == True:
+        winner = player_list[1]
+        name_list = current_leaderboard[1].split("Gelijkspel")
+        name_1 = name_list[0].strip()
+        name_2 = name_list[1].strip()
+        if winner == name_1:
+            append_string = f"{game_count} W      L"
+            current_leaderboard.append(append_string)
+        elif winner == name_2:
+            append_string = f"{game_count} L      W"
+            current_leaderboard.append(append_string)
     else:
-        if is_winner == True:
-            current_leaderboard.append
-
-
-
+        append_string = f"{game_count}   T  "
+        current_leaderboard.append(append_string)
+    for row in current_leaderboard:
+        print(row)
+    return current_leaderboard
 
 
 def two_player_tic_tac_toe(game_count : int, player_list : list[str],current_leaderboard : list[str]):
@@ -98,8 +107,10 @@ def two_player_tic_tac_toe(game_count : int, player_list : list[str],current_lea
         player_turn = turn % 2
         player_name = player_list[player_turn]
         input_player = input(f"{player_name} please input your move: ")
+        input_player = input_player.upper()
         while not game_input_checker(input_player, board):
             input_player = input(f"{player_name} please input a valid move: ")
+            input_player = input_player.upper()
         if player_turn == 1:
             board[input_player] = "X"
         else:
@@ -111,26 +122,27 @@ def two_player_tic_tac_toe(game_count : int, player_list : list[str],current_lea
         if turn == 10:
             break
     if game_is_over == "1":
-        print(player_list[1], "has won!")
+        print(player_list[1], "heeft gewonnen!")
         is_winner = True
         winner = player_list [1]
         loser = player_list[0]
     elif game_is_over == "0":
-        print(player_list[0], "has won!")
+        print(player_list[0], "heeft gewonnen!")
         is_winner = True
         winner = player_list [0]
         loser = player_list[1]
         player_list = [loser,winner]
     else: 
         is_winner = False
-        print("The game is a tie!")
+        print("Het is gelijkspel!")
         randomnumber1 = random.randint(0,1)
         randomnumber2 = (randomnumber1 + 1) % 2
         player_1 = player_list[randomnumber1]
         player_2 = player_list[randomnumber2]
         player_list =  [player_2,player_1]
-
-    return player_list
+    current_leaderboard = leaderboard_tic_tac_toe(player_list,game_count,is_winner,current_leaderboard)
+    return_list = [player_list,current_leaderboard]
+    return return_list
 
 
 def is_name_valid(player):
@@ -183,8 +195,10 @@ def main ():
                 player_1 = player_list[randomnumber1]
                 player_2 = player_list[randomnumber2]
                 player_order_list =  [player_2,player_1]
-                leaderboard_list = ["TIC TAC TOE Leaderboard",name_p1,name_p2]
-            player_order_list = two_player_tic_tac_toe(game_count,player_order_list,leaderboard_list)
+                leaderboard_list = ["TIC TAC TOE Leaderboard",f"{name_p1} Gelijkspel {name_p2}"]
+            return_list = two_player_tic_tac_toe(game_count,player_order_list,leaderboard_list)
+            player_order_list = return_list[0]
+            leaderboard_list = return_list[1]
         extra_game = is_extra_game()
         if extra_game:
             game_count += 1
