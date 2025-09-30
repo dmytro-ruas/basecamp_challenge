@@ -34,9 +34,11 @@ def winner_checker_tic_tac_toe(board_dictionary :dict):
         value3 = board_dictionary[list[2]]
         if value1 == value2 and value2 == value3:
             if value1 == "X":
-                return 1
+                return "1"
             elif value2 == "O":
-                return 2
+                return "0"
+            elif " " not in board_dictionary:
+                return "3"
             else:
                 continue
     return False            
@@ -46,7 +48,7 @@ def winner_checker_tic_tac_toe(board_dictionary :dict):
 def is_count_valid():
     input_valid = False
     while input_valid == False:
-        player_count = input("Hoeveel spelers zijn er?")
+        player_count = input("Hoeveel spelers zijn er? ")
         if player_count == "1" or player_count == "2":
             input_valid = True
             return player_count
@@ -65,6 +67,9 @@ def is_extra_game():
 def single_player_tic_tac_toe():
     print("WIP")
 
+def leaderboard(player_list :list[str]):
+    winner = player_list[1]
+    loser = player_list[0]
 
 def two_player_tic_tac_toe(game_count :int, player_list :list[str]):
     board = {
@@ -77,6 +82,7 @@ def two_player_tic_tac_toe(game_count :int, player_list :list[str]):
     "C1":" ",
     "C2":" ",
     "C3":" ",}
+    boardgame_printer(board)
     turn = 1
     game_is_over = False
     while not game_is_over:
@@ -93,33 +99,67 @@ def two_player_tic_tac_toe(game_count :int, player_list :list[str]):
         boardgame_printer(board)
         if turn > 5:
             game_is_over = winner_checker_tic_tac_toe(board)
-    if game_is_over == 1:
+        if turn == 9:
+            break
+    if game_is_over == "1":
         print(player_list[1], "has won!")
         winner = player_list [1]
         loser = player_list[0]
-    else :
+    elif game_is_over == "0":
         print(player_list[0], "has won!")
         winner = player_list [0]
         loser = player_list[1]
         player_list = [loser,winner]
+    else: 
+        print("The game is a tie!")
     return player_list
 
 
-
-
+def is_name_valid(player):
+    valid_characters = "qwertyuiopasdfghjklzxcvbnm,-/"
+ 
+    # variables die de loops helpen
+    invalid_name = True
+    invalid_chr = False
+    # validatie loop
+    while invalid_name:
+        # input en een lowercase versie dat we nodig hebben om voor invalid characters te checken
+        name = input(f"Name {player}: ")
+        name_lower = name.lower()
+        # die if controleert de hoofdletter
+        if name[0].isupper() == False:
+            print("input error")
+            continue
+        # die hele loop controleert dat er geen nummers in staan
+        # als er iets invalid instaan, dan gaat de programma dit if in - die zegt dat er iets invalid is
+        for character in name_lower :
+            if character not in valid_characters:
+                print("input error")
+                invalid_chr = True
+        # daarna, als er iets invalid instaan, gaat de programma dit if in, en het resets de inputproces
+        if invalid_chr:
+            invalid_chr = False
+            continue
+        # als er niets invalid is, dan kunnen we de loop stoppen en de name terug sturen
+        invalid_name = False
+        return name
+       
         
       
 def main ():
     game_count = 1
     extra_game = True
     player_count = int(is_count_valid())
-    player_list= ["Christopher","Dmytro"]
     while extra_game:
         if player_count == 1:
             print("Het spel zal beginnen met 1 Speler")
             single_player_tic_tac_toe()
         else:
             print("Het spel zal beginnen met 2 Spelers")
+            if game_count == 1:
+                name_p1 = is_name_valid("player 1")
+                name_p2 = is_name_valid("player 2")
+                player_list = [name_p2,name_p1]
             player_list = two_player_tic_tac_toe(game_count,player_list)
         extra_game = is_extra_game()
         if extra_game:
