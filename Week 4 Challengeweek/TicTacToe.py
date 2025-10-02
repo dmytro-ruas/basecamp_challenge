@@ -3,7 +3,7 @@ import sys,time,random
 
 def slow_type(output_string):
     # Ik heb deze functie online gevonden om mijn tutorial langzaam te printen. 
-    typing_speed = 90 #wpm
+    typing_speed = 120 #wpm
     for letter in output_string:
         sys.stdout.write(letter)
         sys.stdout.flush()
@@ -103,10 +103,10 @@ def is_extra_game():
     while True:
         extra_game_input = input("One more game? Yes/No ")
         extra_game_input_lower = extra_game_input.lower()
-        if extra_game_input_lower == "yes" or extra_game_input_lower == "no":
-            if extra_game_input_lower == "yes":
+        if extra_game_input_lower == "yes" or extra_game_input_lower == "no" or extra_game_input_lower == "y" or extra_game_input_lower == "n":
+            if extra_game_input_lower == "yes" or extra_game_input_lower == "y":
                 break
-            if extra_game_input_lower == "no":
+            if extra_game_input_lower == "no" or extra_game_input_lower == "n":
                 extra_game = False
                 return False
         else:
@@ -141,6 +141,7 @@ def single_player_tic_tac_toe(game_count : int, player_list : list[str],current_
             board[input_player] = "X"
         else:
             print("Mr. Robot is thinking")
+            time.sleep(3)
             input_bot = str(bot_player_logic())
             while not game_input_checker(input_bot, board):
                 input_bot = bot_player_logic()
@@ -202,12 +203,15 @@ def lead_counter(current_leaderboard : list[list[str]]):
             if status_player_2 == "W" :
                 win_counter_player_2 += 1
     if win_counter_player_1 > win_counter_player_2:
+        print(" ")
         print(f"{name_1} is in the lead with {win_counter_player_1} wins!")
         print(f"{name_2} is behind with {win_counter_player_2} wins!")
     elif win_counter_player_2 > win_counter_player_1:
+        print (" ")
         print(f"{name_2} is in the lead with {win_counter_player_2} wins!")
         print(f"{name_1} is behind with {win_counter_player_1} wins!")
     else:
+        print (" ")
         print(f"You are both tied with {win_counter_player_1}!")        
 
 # Deze funcite maakt onze leaderboard. Dit is een list van lists
@@ -352,36 +356,46 @@ def is_name_valid(player):
         # als er niets invalid is, dan kunnen we de loop stoppen en de name terug sturen
         invalid_name = False
         return name
+    
+    
 # Kort tutorial hoe het spel werkt     
 def tutorial_tic_tac_toe():
-    board = {
-    "A1":"A1",
-    "B1":"B1",
-    "C1":"C1",
-    "A2":"A2",
-    "B2":"B2",
-    "C2":"C2",
-    "A3":"A3",
-    "B3":"B3",
-    "C3":"C3",}
-    slow_type("Welkom tot de tutorial")
-    slow_type("Om tic tac toe te spelen moet je een coordinaat geven als input")
-    slow_type("Dit zijn de geldige posities in het spel met de corresponderende positie in het bord")
-    boardgame_printer(board)
-    board = {
-    "A1":"X",
-    "B1":" ",
-    "C1":" ",
-    "A2":" ",
-    "B2":" ",
-    "C2":" ",
-    "A3":" ",
-    "B3":" ",
-    "C3":" ",}
-    slow_type("Dus als je linksboven iets wilt plaatsen zoals hieronder")
-    boardgame_printer(board) 
-    slow_type("Moet je als input A1 geven")
-    slow_type("Hopelijk is het duidelijker nu, veel succes met de game!")
+    tutorial_needed = input("Would you like to see tutorial? (Y/N)")
+    if tutorial_needed == "yes" or tutorial_needed == "no" or tutorial_needed == "y" or tutorial_needed == "n":
+            if tutorial_needed == "yes" or tutorial_needed == "y":
+                board = {
+                    "A1":"A1",
+                    "B1":"B1",
+                    "C1":"C1",
+                    "A2":"A2",
+                    "B2":"B2",
+                    "C2":"C2",
+                    "A3":"A3",
+                    "B3":"B3",
+                    "C3":"C3",}
+                slow_type("Welkom tot de tutorial")
+                slow_type("Om tic tac toe te spelen moet je een coordinaat geven als input")
+                slow_type("Dit zijn de geldige posities in het spel met de corresponderende positie in het bord")
+                boardgame_printer(board)
+                board = {
+                    "A1":"X",
+                    "B1":" ",
+                    "C1":" ",
+                    "A2":" ",
+                    "B2":" ",
+                    "C2":" ",
+                    "A3":" ",
+                    "B3":" ",
+                    "C3":" ",}
+                slow_type("Dus als je linksboven iets wilt plaatsen zoals hieronder")
+                boardgame_printer(board) 
+                slow_type("Moet je als input A1 geven")
+                slow_type("Hopelijk is het duidelijker nu, veel succes met de game!")
+            if tutorial_needed == "no" or tutorial_needed == "n":
+                return
+    else:
+        print("Didn't quite catch that, type Yes or No")
+    
 # Start Tic Tac Toe spel   
 def Tic_Tac_Toe_start():
     game_count = 1
@@ -419,5 +433,21 @@ def Tic_Tac_Toe_start():
         if extra_game:
             game_count += 1
 
+
+def main_menu():
+    list_games = ["Tic-Tac-Toe", "Coming soon. . ."]
+    print(f"What would you like to play?\n{list_games}")
+    while True:
+        game_choice = input("I would like to play ")
+        if game_choice in list_games:  
+            return game_choice
+            break
+        else: 
+            print("Please choose an existing game!")
+
+
+
 if __name__ == "__main__":
-    Tic_Tac_Toe_start()
+    game_choice = main_menu()
+    if game_choice == "Tic-Tac-Toe":
+        Tic_Tac_Toe_start()
