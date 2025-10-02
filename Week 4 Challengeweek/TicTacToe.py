@@ -10,6 +10,7 @@ def slow_type(output_string):
         time.sleep(random.random()*10.0/typing_speed)
     print (" ")
 
+# ze functie zorgt voor de beurt van de bot. Het genereert een random keuze and checkt dat het wel valid is. Het bot is helaas  nog geen skynet 
 def bot_player_logic(): 
     valid_list = ["A1","A2","A3","B1","B2","B3","C1","C2","C3"] 
     board = {
@@ -85,21 +86,20 @@ def winner_checker_tic_tac_toe(board_dictionary :dict):
     return False            
 
  
- 
+# deze functie checkt als de player count valid is, het gebruik een loop om voor input weer te vragen als het invalid is
 def is_count_valid():
     input_valid = False
     while input_valid == False:
-        player_count = input("Hoeveel spelers zijn er? ")
+        player_count = input("How many players are playing? ")
         if player_count == "1" or player_count == "2":
             input_valid = True
             return player_count
             break
         else:
-            print("input error")
+            print("The amount of players can only be 1 or 2")
  
-
+# aan het einde van het spel, vraagt het als de spelers wilen doorgaan, ze kunnen meerdere inputs sturen
 def is_extra_game():
- 
     while True:
         extra_game_input = input("One more game? Yes/No ")
         extra_game_input_lower = extra_game_input.lower()
@@ -113,7 +113,7 @@ def is_extra_game():
             print("Didn't quite catch that, type Yes or No")
     return True
     
-
+# deze functie is dezelfde als de 2 speler tic-tac-toe, maar aangepaast om de bot in te houden
 def single_player_tic_tac_toe(game_count : int, player_list : list[str],current_leaderboard : list[str]):
     board = {
     "A1":" ",
@@ -433,6 +433,7 @@ def Tic_Tac_Toe_start():
         if extra_game:
             game_count += 1
 
+# die functie maakt de menu, in de toekomst zel er meer keuzes zijn
 
 def main_menu():
     list_games = ["Tic-Tac-Toe", "Coming soon. . ."]
