@@ -357,7 +357,7 @@ def is_name_valid(player):
         invalid_name = False
         return name
     
-    
+
 # Kort tutorial hoe het spel werkt     
 def tutorial_tic_tac_toe():
     tutorial_needed = input("Would you like to see tutorial? (Y/N)")
@@ -435,11 +435,13 @@ def Tic_Tac_Toe_start():
 
 
 def main_menu():
-    list_games = ["Tic-Tac-Toe", "Coming soon. . ."]
+    list_games_num = ["1", "2"]
+    list_games_string = ["Tic-Tac-Toe", "Coming soon. . ."]
+    list_games = ["1: Tic-Tac-Toe", "2: Coming soon. . ."]
     print(f"What would you like to play?\n{list_games}")
     while True:
         game_choice = input("I would like to play ")
-        if game_choice in list_games:  
+        if game_choice in list_games or game_choice in list_games_num or game_choice in list_games_string :  
             return game_choice
             break
         else: 
@@ -449,5 +451,5 @@ def main_menu():
 
 if __name__ == "__main__":
     game_choice = main_menu()
-    if game_choice == "Tic-Tac-Toe":
+    if game_choice == "Tic-Tac-Toe" or "1":
         Tic_Tac_Toe_start()
