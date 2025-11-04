@@ -59,7 +59,7 @@ def player_bets(player_balances: dict) -> list:
 
             if player_balances[player] - int(placed_bet) >= 0:
                 #bets_made[player] = int(placed_bet)
-                bets_made.append({"name": player, "bet": placed_bet})
+                bets_made.append({"name": player, "bet": int(placed_bet)})
                 invalid_bet = False
             else: 
                 print("invalid bet!")
