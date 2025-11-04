@@ -47,8 +47,8 @@ def is_name_valid(player_number: int) -> str:
         return name
 
 
-def player_bets(player_balances: dict) -> dict:
-    bets_made = {}
+def player_bets(player_balances: dict) -> list:
+    bets_made = []
     valid_numbers = set("1234567890")
     for player in player_balances:
         invalid_bet = True
@@ -58,7 +58,8 @@ def player_bets(player_balances: dict) -> dict:
             # hier moet een volledige validatie van de bet staan. Geldige letters en geldig aantal geld. 
 
             if player_balances[player] - int(placed_bet) >= 0:
-                bets_made[player] = int(placed_bet)
+                #bets_made[player] = int(placed_bet)
+                bets_made.append({"name": player, "bet": placed_bet})
                 invalid_bet = False
             else: 
                 print("invalid bet!")
@@ -122,11 +123,11 @@ def dealers_turn(players):
         "2_cl": 2,
     }
     deck_list = list(card_deck.items())
-    player_hands = {}
-    dealers_hand = {}
+    player_hands = []
+    dealers_hand = []
     card1 = random.choice(deck_list)
     card2 = random.choice(deck_list)
-    dealers_hand["dealer"] = [card1, card2]
+    dealers_hand.append({"name": "Dealer", "cards": [card1, card2]})
     deck_list.remove(card1)
     deck_list.remove(card2)
 
@@ -135,8 +136,9 @@ def dealers_turn(players):
         deck_list.remove(card1)
         card2 = random.choice(deck_list)
         deck_list.remove(card2)
-        player_hands[player] = [card1, card2]
-    print(player_hands, dealers_hand)
+
+        player_hands.append({"name": player, "cards": [card1, card2]})
+
 # tutorial, karten zichtbaar maken, is_spel_gedaan
 
 def tutorial_read():
