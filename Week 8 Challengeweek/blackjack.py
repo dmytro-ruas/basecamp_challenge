@@ -17,14 +17,14 @@ def start_game() -> set:
             print("Identical names are not allowed!")
     return player_names
 
-   
+
 def players_data(players: set) -> dict:
     players_data_dict = {}
     for player_name in players:
         players_data_dict[player_name] = 300
     return players_data_dict
 
- 
+
 def is_name_valid(player_number: int) -> str:
     valid_characters = "qwertyuiopasdfghjklzxcvbnm,-/"
     invalid_name = True
@@ -65,7 +65,7 @@ def player_bets(player_balances: dict) -> list:
     return bets_made
 
 
-def dealers_turn(players) -> list:
+def dealers_turn(players) -> tuple:
     #dia - diamonds, sp - spades, hr - hearts, cl - clubs
     card_deck = {
         "ace_dia": [1, 11],
@@ -125,10 +125,10 @@ def dealers_turn(players) -> list:
     player_hands = []
     dealers_hand = []
     card1 = random.choice(deck_list)
-    card2 = random.choice(deck_list)
-    dealers_hand.append({"name": "Dealer", "cards": [card1, card2]})
     deck_list.remove(card1)
+    card2 = random.choice(deck_list)
     deck_list.remove(card2)
+    dealers_hand.append({"name": "Dealer", "cards": [card1, card2]})
 
     for player in players:
         card1 = random.choice(deck_list)
@@ -138,17 +138,55 @@ def dealers_turn(players) -> list:
 
         player_hands.append({"name": player, "cards": [card1, card2]})
     player_dealer_hands = [player_hands, dealers_hand]
-    return player_dealer_hands
+
+    return (player_dealer_hands, deck_list)
 # tutorial, karten zichtbaar maken, is_spel_gedaan
 
-def dealer_flip(player_dealer_hands):
-    #print(player_dealer_hands)
+
+# first idea is to also pass the remaining deck into dealer flip
+
+def dealer_flip(player_dealer_hands, deck):
+
+    #AHHH ACES WHAT DO I DO ABOUT ACES
     dealer_hand_cards = [player_dealer_hands[-1][0]["cards"][0][0], player_dealer_hands[-1][0]["cards"][1][0]]
-    dealer_hand_value = player_dealer_hands[-1][0]["cards"][0][1] + player_dealer_hands[-1][0]["cards"][1][1]
+    #dealer_hand_cards = ['2_dia', '2_sp']
+    dealer_hand_values = [player_dealer_hands[-1][0]["cards"][0][1], player_dealer_hands[-1][0]["cards"][1][1]]
     # de tweede kaart van de dealer moet in die lijn zichtbaar gemaakt worden
-    if dealer_hand_value < 16:
-        # hier moet een niuewe card gepakt worden
-    pass
+    #if dealer_hand_cards 
+
+    print(dealer_hand_values)
+    # new_card = random.choice(deck)
+    # deck.remove(new_card)
+    #new_card = ('ace_cl', [1, 11])
+    dealer_hand_count = 0
+    print(deck)
+    print(dealer_hand_values[0], dealer_hand_values[1])
+    if isinstance(dealer_hand_cards[0], list) and isinstance(dealer_hand_cards[1], list):
+        for card in dealer_hand_values:
+            new_card = random.choice(deck)
+            print(new_card)
+            deck.pop(new_card)
+            if isinstance(card, int):
+                if card >= 6:
+                    dealer_hand_count = card + 11
+                elif isinstance(new_card, tuple):
+                        print("ace")
+    else: 
+        dealer_hand_count = dealer_hand_values[0] + dealer_hand_values[1]
+        print(dealer_hand_count)
+        if dealer_hand_count < 17:
+            while dealer_hand_count < 17:
+                new_card = random.choice(deck) 
+                #new_card = ('ace_cl', [1, 11])
+                #deck.pop(new_card)
+                print(new_card)
+                if isinstance(new_card, list):
+                    dealer_hand_count += 11
+                else:
+                    dealer_hand_count += int(new_card[1])
+                
+    print(dealer_hand_count)
+
 
 
 def tutorial_read():
@@ -164,11 +202,13 @@ def main():
     # game on kan een list zijn met een boolean value for elke speler, of een int
     while game_on:
         bets = player_bets(players_balance)
-        player_dealer_hands = dealers_turn(players)
+        player_dealer_hands = dealers_turn(players)[0]
+        deck = dealers_turn(players)[1]
         #player_turn ofzo
-        dealer_flip(player_dealer_hands)
+        dealer_flip(player_dealer_hands, deck)
 
 
 if __name__ == "__main__":
     main()
 
+#for some reason the deck_list doesnt work properly, maybe it has to do with the fact that im using it in 2 functions
