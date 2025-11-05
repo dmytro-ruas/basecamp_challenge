@@ -65,7 +65,7 @@ def player_bets(player_balances: dict) -> list:
     return bets_made
 
 
-def dealers_turn(players):
+def dealers_turn(players) -> list:
     #dia - diamonds, sp - spades, hr - hearts, cl - clubs
     card_deck = {
         "ace_dia": [1, 11],
@@ -137,8 +137,19 @@ def dealers_turn(players):
         deck_list.remove(card2)
 
         player_hands.append({"name": player, "cards": [card1, card2]})
-
+    player_dealer_hands = [player_hands, dealers_hand]
+    return player_dealer_hands
 # tutorial, karten zichtbaar maken, is_spel_gedaan
+
+def dealer_flip(player_dealer_hands):
+    #print(player_dealer_hands)
+    dealer_hand_cards = [player_dealer_hands[-1][0]["cards"][0][0], player_dealer_hands[-1][0]["cards"][1][0]]
+    dealer_hand_value = player_dealer_hands[-1][0]["cards"][0][1] + player_dealer_hands[-1][0]["cards"][1][1]
+    # de tweede kaart van de dealer moet in die lijn zichtbaar gemaakt worden
+    if dealer_hand_value < 16:
+        # hier moet een niuewe card gepakt worden
+    pass
+
 
 def tutorial_read():
     pass
@@ -153,10 +164,11 @@ def main():
     # game on kan een list zijn met een boolean value for elke speler, of een int
     while game_on:
         bets = player_bets(players_balance)
-        dealers_turn(players)
+        player_dealer_hands = dealers_turn(players)
+        #player_turn ofzo
+        dealer_flip(player_dealer_hands)
 
 
 if __name__ == "__main__":
     main()
 
-# test branch
