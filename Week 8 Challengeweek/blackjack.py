@@ -58,7 +58,6 @@ def player_bets(player_balances: dict) -> list:
             # hier moet een volledige validatie van de bet staan. Geldige letters en geldig aantal geld. 
 
             if player_balances[player] - int(placed_bet) >= 0:
-                #bets_made[player] = int(placed_bet)
                 bets_made.append({"name": player, "bet": int(placed_bet)})
                 invalid_bet = False
             else: 
@@ -160,3 +159,4 @@ def main():
 if __name__ == "__main__":
     main()
 
+# test branch
