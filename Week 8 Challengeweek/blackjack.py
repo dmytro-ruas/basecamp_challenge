@@ -68,7 +68,7 @@ def player_bets(player_balances: dict) -> list:
 def dealers_turn(players) -> tuple:
     #dia - diamonds, sp - spades, hr - hearts, cl - clubs
     card_deck = {
-        "ace_dia": [1, 11],
+        "ace_dia": 11,
         "king_dia": 10,
         "queen_dia": 10,
         "jack_dia": 10,
@@ -81,7 +81,7 @@ def dealers_turn(players) -> tuple:
         "4_dia": 4,
         "3_dia": 3,
         "2_dia": 2,
-        "ace_sp": [1, 11],
+        "ace_sp": 11,
         "king_sp": 10,
         "queen_sp": 10,
         "jack_sp": 10,
@@ -94,7 +94,7 @@ def dealers_turn(players) -> tuple:
         "4_sp": 4,
         "3_sp": 3,
         "2_sp": 2,
-        "ace_hr": [1, 11],
+        "ace_hr": 11,
         "king_hr": 10,
         "queen_hr": 10,
         "jack_hr": 10,
@@ -107,7 +107,7 @@ def dealers_turn(players) -> tuple:
         "4_hr": 4,
         "3_hr": 3,
         "2_hr": 2,
-        "ace_cl": [1, 11],
+        "ace_cl": 11,
         "king_cl": 10,
         "queen_cl": 10,
         "jack_cl": 10,
@@ -121,7 +121,12 @@ def dealers_turn(players) -> tuple:
         "3_cl": 3,
         "2_cl": 2,
     }
-    deck_list = list(card_deck.items())
+    deck_list1 = list(card_deck.items())
+    deck_list = []
+    for item in deck_list1:
+        deck_list.append(list(item))
+    
+        
     player_hands = []
     dealers_hand = []
     card1 = random.choice(deck_list)
@@ -159,32 +164,55 @@ def dealer_flip(player_dealer_hands, deck):
     # deck.remove(new_card)
     #new_card = ('ace_cl', [1, 11])
     dealer_hand_count = 0
-    print(deck)
-    print(dealer_hand_values[0], dealer_hand_values[1])
-    if isinstance(dealer_hand_cards[0], list) and isinstance(dealer_hand_cards[1], list):
-        for card in dealer_hand_values:
-            new_card = random.choice(deck)
-            print(new_card)
-            deck.pop(new_card)
-            if isinstance(card, int):
-                if card >= 6:
-                    dealer_hand_count = card + 11
-                elif isinstance(new_card, tuple):
-                        print("ace")
-    else: 
-        dealer_hand_count = dealer_hand_values[0] + dealer_hand_values[1]
-        print(dealer_hand_count)
-        if dealer_hand_count < 17:
-            while dealer_hand_count < 17:
-                new_card = random.choice(deck) 
-                #new_card = ('ace_cl', [1, 11])
-                #deck.pop(new_card)
-                print(new_card)
-                if isinstance(new_card, list):
-                    dealer_hand_count += 11
-                else:
-                    dealer_hand_count += int(new_card[1])
+    # print(deck)
+    # print(dealer_hand_values[0], dealer_hand_values[1])
+    # if isinstance(dealer_hand_cards[0], list) and isinstance(dealer_hand_cards[1], list):
+    #     for card in dealer_hand_values:
+    #         new_card = random.choice(deck)
+    #         print(new_card)
+    #         deck.pop(new_card)
+    #         if isinstance(card, int):
+    #             if card >= 6:
+    #                 dealer_hand_count = card + 11
+    #             elif isinstance(new_card, tuple):
+    #                     print("ace")
+    # else: 
+    #     dealer_hand_count = dealer_hand_values[0] + dealer_hand_values[1]
+    #     print(dealer_hand_count)
+    #     if dealer_hand_count < 17:
+    #         while dealer_hand_count < 17:
+    #             new_card = random.choice(deck) 
+    #             #new_card = ('ace_cl', [1, 11])
+    #             #deck.pop(new_card)
+    #             print(new_card)
+    #             if isinstance(new_card, list):
+    #                 dealer_hand_count += 11
+    #             else:
+    #                 dealer_hand_count += int(new_card[1])
                 
+    
+    dealer_hand_count = dealer_hand_values[0] + dealer_hand_values[1]
+    changed_ace = False
+    ace_present = False
+    if "ace" in dealer_hand_cards[0] or "ace" in dealer_hand_cards[1]:
+        ace_present = True
+    if dealer_hand_count == 22:
+        dealer_hand_count -= 10
+    if dealer_hand_count < 17:
+        while dealer_hand_count < 17: 
+            new_card = random.choice(deck) 
+            #new_card = ('ace_cl', [1, 11])
+            deck.remove(new_card)
+            print(new_card)
+            dealer_hand_count += new_card[1]
+            if dealer_hand_count > 21 and "ace" in new_card[0]:
+                dealer_hand_count -= 10
+            if dealer_hand_count > 21 and changed_ace is False and ace_present:
+                dealer_hand_count -= 10
+                changed_ace = True
+            
+            print(dealer_hand_count)
+
     print(dealer_hand_count)
 
 
