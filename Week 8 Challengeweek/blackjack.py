@@ -1,39 +1,46 @@
 import random
 import sys
 import time
- 
 
-def start_game() -> set:
+
+def start_game() -> list:
     print("\n\n\nWelcome to this game of blackjack. Would you like to view a tutorial?")
     tutorial_view = input("Would you like to view a tutorial? Y/N: ")
+
     if tutorial_view.lower() == "yes" or tutorial_view.lower() == "y":
         tutorial_read()
-    # here validation regarding player count could be added (atm programm crashes if u type in a non-number)
+
     player_count = input("\nHow many players would like to play? 1-4: ")
+    players = []
     while not player_count.isdecimal() or int(player_count) >4:
         player_count = input("\nHow many players would like to play? 1-4: ")
+
     player_names = set()
     while len(player_names) != int(player_count):
         player_name = is_name_valid(len(player_names) + 1)
+
         if player_name not in player_names:
             player_names.add(player_name)
         else:
             print("Identical names are not allowed!")
-    return player_names
+
+    for name in player_names:
+        player = {}
+        player["name"] = name
+        player["bet"] = 0
+        player["balance"] = 300
+        player["cards"] = []
+        player["value"] = 0
+        player["result"] = ""
+        players.append(player)
+    return players
+
  
-   
-def players_data(players: set) -> dict:
-    players_data_dict = {}
-    for player_name in players:
-        players_data_dict[player_name] = 300
-    return players_data_dict #returns in format (Str:int)
- 
- 
-def is_name_valid(player_number: int) -> str:
+def is_name_valid(player_number: int):
     valid_characters = "qwertyuiopasdfghjklzxcvbnm,-/"
     invalid_name = True
     invalid_chr = False
-    
+
     while invalid_name:
         name = input(f"\nWhat is the name of player {player_number}: ")
         name_lower = name.lower()
@@ -49,28 +56,22 @@ def is_name_valid(player_number: int) -> str:
             continue
         invalid_name = False
         return name
- 
- 
-def player_bets(player_balances: dict) -> list:
-    bets_made = []
-    valid_numbers = set("1234567890")
-    for player in player_balances:
+
+
+def player_bets(players: list):
+    for player in players:
         invalid_bet = True
+
         while invalid_bet:
-        # look how much money a player has, tell him to input a bet in a range of his balance. place the bet and put it into a dictionary
-            placed_bet = input(f"\n{player}, place a bet between 1 and {player_balances[player]}: ")
-            # hier moet een volledige validatie van de bet staan. Geldige letters en geldig aantal geld.
- 
-            if player_balances[player] - int(placed_bet) >= 0:
-                #bets_made[player] = int(placed_bet)
-                bets_made.append({"name": player, "bet": int(placed_bet)})
+            placed_bet = input(f"\n{player["name"]}, place a bet between 1 and {player["balance"]}: ")
+            if player["balance"] - int(placed_bet) >= 0:
+                player["bet"] = int(placed_bet)
                 invalid_bet = False
             else:
                 print("invalid bet!")
-    return bets_made
- 
- 
-def display_dealer_first_hand(card :tuple):
+
+
+def display_dealer_first_hand(card: tuple):
     print("Dealer First Card:")
     value_card,suit,rank_str = card
     top = "┌─────────┐"
@@ -92,7 +93,8 @@ def display_dealer_first_hand(card :tuple):
     print(side)
     print(rank_line_right)
     print(bottom)
- 
+
+
 def display_hand_player(player_name: str, hand: list[tuple[int,str,str]]):
     if player_name == "Dealer:":
         print("This was the dealer's hand: ")
@@ -137,8 +139,8 @@ def display_hand_player(player_name: str, hand: list[tuple[int,str,str]]):
     print(final_side2)
     print(final_rank_line_right)
     print(final_bottom)
-    
-    
+
+
 def hit_or_stay(player:str ,hand: list[tuple[int,str,str]], deck: dict, deck_keys: list) -> list[tuple[int,str,str]]:
     value = 0
     for card in hand:
@@ -166,11 +168,9 @@ def hit_or_stay(player:str ,hand: list[tuple[int,str,str]], deck: dict, deck_key
         else:
             return hand
     return hand
-            
-            
- 
-def dealers_turn(bets: list, players_balance: dict):
-    players = set(players_balance.keys())
+
+
+def dealers_turn(players: list):
     card_deck = {
         "A♦": (11,'♦','A'),
         "K♦": (10,'♦','K'),
@@ -226,7 +226,7 @@ def dealers_turn(bets: list, players_balance: dict):
         "2♣": (2,'♣','2'),
     }
     deck_keys = list(card_deck.keys())
-    player_hands = {}
+
     dealer_hand = {}
     card1_key = random.choice(deck_keys)
     card1 = card_deck[card1_key]
@@ -250,12 +250,15 @@ def dealers_turn(bets: list, players_balance: dict):
         deck_keys.remove(card2_key)
         card_deck.pop(card2_key)
         value = card1[0]+card2[0]
-        player_hands[player] = {"cards": [card1, card2], "value": value}
-        current_player_hand = player_hands[player]["cards"]
-        display_hand_player(player,current_player_hand)
+
+        player["cards"] = [card1, card2]
+        player["value"] = value
+        current_player_hand = player["cards"]
+
+        display_hand_player(player["name"],current_player_hand)
     for player in players:
-        current_player_hand = player_hands[player]["cards"]
-        current_player_hand = hit_or_stay(player,current_player_hand,card_deck,deck_keys)
+        current_player_hand = player["cards"]
+        current_player_hand = hit_or_stay(player["name"],current_player_hand,card_deck,deck_keys)
         value = 0
         for card in current_player_hand:
             value += card[0]
@@ -263,9 +266,9 @@ def dealers_turn(bets: list, players_balance: dict):
             for card in current_player_hand:
                 if card[2] == "A":
                     value -= 10
-        player_hands[player]["value"] = value
+        player["value"] = value
         if value >21:
-            player_hands[player]["value"] = 0        
+            player["value"] = 0       
     dealer_value = dealer_hand['value']
     if dealer_value < 17:
         new_card_key = random.choice(deck_keys)
@@ -281,48 +284,34 @@ def dealers_turn(bets: list, players_balance: dict):
                 dealer_value -= 10
     if dealer_value > 21:
         dealer_value = 0
-    winners = []
-    losers = []
-    tied = []
     if len(players) > 0:
         for player in players:
-            if player_hands[player]["value"] == 0:
-                print(f"{player} Busted")
-                losers.append(player)
+            if player["value"] == 0:
+                print(f"{player["name"]} Busted")
+                player["result"] = "loser"
             elif dealer_value == 0:
                 print(f"Dealer busted, remaining players win")
-                winners.append(player)
-            elif dealer_value > player_hands[player]["value"]:
-                print(f"{player} lost their bet, dealer has better hand")
-                losers.append(player)
-            elif dealer_value == player_hands[player]["value"]:
+                player["result"] = "winner"
+            elif dealer_value > player["value"]:
+                print(f"{player["name"]} lost their bet, dealer has better hand")
+                player["result"] = "loser"
+            elif dealer_value == player["value"]:
                 print(f"The game is a tie")
-                tied.append(player)
+                player["result"] = "tied"
             else:
-                print(f"{player} win their bet, they have the better hand")
-                winners.append(player)
-            game_result = winners, losers, tied
-        player_balance = balance_update(bets, game_result, players_balance)
-        return player_balance
- 
- 
-def balance_update(bets: list[dict], game_result: tuple[list], players_balance): # bets, player_balance,
-    winners, losers, tied = game_result
-    for player in bets:
-        player_name = player["name"]
-        if player_name in winners:
-            current_balance = players_balance[player_name]
-            player_bet = player["bet"]
-            current_balance += player_bet
-            players_balance[player_name] = current_balance
-        if player_name in losers:
-            current_balance = players_balance[player_name]
-            player_bet = player["bet"]
-            current_balance -= player_bet
-            players_balance[player_name] = current_balance
-    return players_balance
-# tutorial, karten zichtbaar maken, is_spel_gedaan
- 
+                print(f"{player["name"]} win their bet, they have the better hand")
+                player["result"] = "winner"
+        balance_update(players)
+
+
+def balance_update(players: list):
+    for player in players:
+        if player["result"] == "winner":
+            player["balance"] += player["bet"]
+        if player["result"] == "loser":
+            player["balance"] -= player["bet"]
+
+
 def tutorial_read():
     slow_type("Welcome to the game of Blackjack!")
     slow_type("")
@@ -389,10 +378,9 @@ def tutorial_read():
     slow_type("It's the best possible hand! It usually means you win 2 times your points for that round!")
     slow_type("")
     slow_type("That's the basic game! Ready to play? Try to see how high you can get your point score!")
-    
 
 
-def slow_type(output_string):
+def slow_type(output_string: str):
     # Ik heb deze functie online gevonden om mijn tutorial langzaam te printen. 
     typing_speed = 120 #wpm
     for letter in output_string:
@@ -400,27 +388,23 @@ def slow_type(output_string):
         sys.stdout.flush()
         time.sleep(random.random()*10.0/typing_speed)
     print (" ")
- 
- 
+
+
 def main():
     players = start_game()
-    player_balance = players_data(players)
- 
     game_on = True
+
     while game_on:
-        bets = player_bets(player_balance)
-        player_balance = dict(dealers_turn(bets, player_balance))
-        player_remove = []
-        for player_name,balance in player_balance.items():
-            if balance == 0:
-                player_remove.append(player_name)
-        for player in player_remove:
-            print(f"{player} sucks at this game and has run out of money. They are out.")
-            player_balance.pop(player)
-        if len(player_balance) == 0:
+        player_bets(players)
+        dealers_turn(players)
+        for player in players:
+            if player["balance"] == 0:
+                print(f"{player["name"]} sucks at this game and has run out of money. They are out.")
+                players.remove(player)
+        if len(players) == 0:
             print("Everyone is out of money, the game will end now")
             game_on = False
 
- 
+
 if __name__ == "__main__":
     main()
