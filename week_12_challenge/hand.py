@@ -4,7 +4,7 @@ class Hand:
         self.cards: list[card.Card] = []
         pass
 
-    def display_hand_player(self):
+    def show_hand(self):
         final_top = ""
         final_bottom = ""
         final_side1 = ""
@@ -42,4 +42,8 @@ class Hand:
         pass
 
     def add_card(self):
+        return "card name"
+
+    def play_card(self, card_name):
         pass
+    
