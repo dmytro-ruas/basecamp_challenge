@@ -19,6 +19,10 @@ def create_deck(player_count : int):
     game_deck: list[Card] = []
     for card in deck_from_json:
         for name,info in card.items():
+            if name == "Defuse":
+                info["count"] -= player_count
+            if name == "Bomb":
+                info["count"] = player_count-1
             for x in range(0,info["count"]):
                 card_for_player_deck = Card(name,info['icon'])
                 game_deck.append(card_for_player_deck)
@@ -56,5 +60,4 @@ def tutorial_view():
 
 
 if __name__ == "__main__":
-    create_deck()
-    #start_game()
+    start_game()
