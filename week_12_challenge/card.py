@@ -1,3 +1,5 @@
+import random
+import hand
 class Card:
     def __init__(self, value: str, icon: str, description: str) -> None:
         self.value = value
@@ -84,7 +86,17 @@ class Card:
                     deck = self.defuse(deck= deck)
                     defused_bomb = True
         return defused_bomb,deck
-             
+
+if __name__ == "__main__":
+    deck = [Card("Attack","🗡️","End your turn without drawing. Force the next player to take 2 turns."),Card("Predict_Future","👁️","Peek at the top 3 cards from the Draw Pile. Put them back in the same order."),Card("Shuffle","🔀","Shuffle the Draw Pile thoroughly.")]
+    random.shuffle(deck)
+    Test_Hand = hand.Hand()
+    Test_Hand.show_hand()
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    Test_Hand.show_hand()
+
 
     
     
