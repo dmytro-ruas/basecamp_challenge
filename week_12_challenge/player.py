@@ -7,7 +7,7 @@ class Player:
         self.status = "alive"
         self.turns = 1
 
-    def player_turn(self):
+    def player_turn(self, deck):
         while self.turns > 0:
             print(f"It's your turn {self.name}")
             print("These are your cards!")
@@ -17,14 +17,13 @@ class Player:
                 player_card_choice = input("Enter a card that you want to play: ")
                 # validatie here
                 print(f"You have chosen {player_card_choice}!")
-                #self.hand.play_card(self.hand.cards_list[player_card_choice]) -> tweede datastructuur van cards.list
-                self.hand.play_card(self.hand.cards[int(player_card_choice)])
+                #self.hand.play_card(self.hand.cards[player_card_choice])
+                self.hand.play_card(int(player_card_choice))
 
-                self.hand.remove_card(player_choice)
+                self.hand.remove_card(int(player_choice))
             else:
                 print("You chose not to play a card!")
-            new_card = self.hand.add_card()
-            print(f"Your new card is {new_card}")
+            print(f"Your new card is: \n")
+            self.hand.add_card(deck)
             self.turns -= 1
 
-        
