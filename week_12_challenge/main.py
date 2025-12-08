@@ -52,7 +52,6 @@ def start_game():
         # input validatie gaat here
         player_hand = Hand()
         player_class: Player = Player(player_name, player_hand)
-
     return players_list
 
 def tutorial_view():

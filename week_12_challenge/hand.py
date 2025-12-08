@@ -1,10 +1,9 @@
-import card
+from card import Card
 class Hand:
     def __init__(self) -> None:
-        self.cards_list: list[card.Card] = []
+        self.cards_list: list[Card] = [Card("Defuse","✂️")]
         pass
 
-    def show_hand(self):
     def show_hand(self):
         final_top = ""
         final_bottom = ""
@@ -42,14 +41,38 @@ class Hand:
     def remove_card(self, choice: int):
         pass
 
-    def add_card(self):
-        return "card name"
-
-    def play_card(self, card_name):
-        pass
+    def add_card(self, deck: list[Card])-> list[Card]:
+        card_to_add = deck[0]
+        deck.pop(0)
+        self.cards_list.append(card_to_add)
+        rank_str = card_to_add.icon
+        suit = card_to_add.value
+        top = "┌─────────┐"
+        bottom = "└─────────┘"
+        side = "│         │"
+        rank_right = rank_str + " "
+        rank_left = " " + rank_str
+        suit_line = f"│    {suit}    │"
+        rank_line_left = f"│{rank_left}       │"
+        rank_line_right = f"│       {rank_right}│"
+        print(top)
+        print(rank_line_left)
+        print(side)
+        print(suit_line)
+        print(side)
+        print(rank_line_right)
+        print(bottom)
+        return deck
 
     def play_card(self,choice: int):
         played_card = self.cards_list[choice]
         played_card.play_card()
         self.remove_card(choice)
 
+if __name__ == "__main__":
+    deck = [Card("Attack","🗡️"),Card("Predict_Future","👁️"),Card("Shuffle","🔀")]
+    Test_Hand = Hand()
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    Test_Hand.show_hand()
