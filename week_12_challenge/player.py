@@ -17,10 +17,14 @@ class Player:
                 player_card_choice = input("Enter a card that you want to play: ")
                 # validatie here
                 print(f"You have chosen {player_card_choice}!")
-                self.hand.cards[player_card_choice].play_card() 
+                #self.hand.play_card(self.hand.cards[player_card_choice]) -> tweede datastructuur van cards.list
+                self.hand.play_card(self.hand.cards[int(player_card_choice)])
 
                 self.hand.remove_card(player_choice)
-            self.hand.add_card()
+            else:
+                print("You chose not to play a card!")
+            new_card = self.hand.add_card()
+            print(f"Your new card is {new_card}")
             self.turns -= 1
 
         
