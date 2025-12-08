@@ -3,34 +3,42 @@
         "Skip": {
             "count" : 4,
             "description" : "Immediately end your turn without drawing a card.",
+            "icon": "⏭️"
         },
         "Attack" : {
             "count" : 4,
-            "description" : "End your turn without drawing. Force the next player to take 2 turns."
+            "description" : "End your turn without drawing. Force the next player to take 2 turns.",
+            "icon" : "🗡️"
         },
         "Defuse": {
-            "count" : 5,
-            "description" : "You don't explode, you can put the bomb back in the deck"
+            "count" : 6,
+            "description" : "You don't explode, you can put the bomb back in the deck",
+            "icon" : "✂️"
         },
         "Predict_Future": {
             "count" : 5,
-            "description" : "Peek at the top 3 cards from the Draw Pile. Put them back in the same order."
+            "description" : "Peek at the top 3 cards from the Draw Pile. Put them back in the same order.",
+            "icon" : "👁️"
         },
         "Shuffle" : {
             "count" : 4,
-            "description" : "Shuffle the Draw Pile thoroughly."
+            "description" : "Shuffle the Draw Pile thoroughly.",
+            "icon" : "🔀"
         },
         "Nope" : {
             "count" : 5,
-            "description" : "Stop any action except for an Exploding Kitten or a Defuse Card. Play at any time."
+            "description" : "Stop any action except for an Exploding Kitten or a Defuse Card. Play at any time.",
+            "icon" : "🛑"
         },
         "Favor" : {
             "count" : 4,
-            "description" : "Force any other player to give you 1 card from their hand. They choose which card."
+            "description" : "Force any other player to give you 1 card from their hand. They choose which card.",
+            "icon" : "🫳"
         },
         "Bomb" : {
-            "count" : 4,
-            "description" : "If you don't defuse this bomb you will explode and die."
+            "count" : 1,
+            "description" : "If you don't defuse this bomb you will explode and die.",
+            "icon" : "💥"
         }
     }
 ]

@@ -1,6 +1,7 @@
 class Card:
-    def __init__(self, value: str) -> None:
+    def __init__(self, value: str, icon: str) -> None:
         self.value = value
+        self.icon = icon
 
     def play_card(self):
             match self.value:

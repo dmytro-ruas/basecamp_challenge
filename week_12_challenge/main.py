@@ -1,6 +1,30 @@
 from player import Player
 from card import Card
 from hand import Hand
+import random,sys,os,json
+
+def json_loader() -> list[dict]:
+    path = os.path.join(sys.path[0], "deck.json")
+    try:
+        with open(path,mode= "r",encoding= "utf-8") as fileobj:
+            deck = json.load(fileobj)
+            return deck
+    except FileNotFoundError:
+        print("File not found")
+        deck = []
+        return deck
+
+def create_deck(player_count : int):
+    deck_from_json = json_loader()
+    game_deck: list[Card] = []
+    for card in deck_from_json:
+        for name,info in card.items():
+            for x in range(0,info["count"]):
+                card_for_player_deck = Card(name,info['icon'])
+                game_deck.append(card_for_player_deck)
+    random.shuffle(game_deck)
+    for card in game_deck:
+        print(card.icon)     
 
 
 def start_game():
@@ -32,4 +56,5 @@ def tutorial_view():
 
 
 if __name__ == "__main__":
-    start_game()
+    create_deck()
+    #start_game()
