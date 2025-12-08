@@ -73,6 +73,3 @@ if __name__ == "__main__":
     deck = [Card("Attack","🗡️"),Card("Predict_Future","👁️"),Card("Shuffle","🔀")]
     Test_Hand = Hand()
     deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    Test_Hand.show_hand()
