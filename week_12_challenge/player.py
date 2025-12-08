@@ -17,7 +17,7 @@ class Player:
                 player_card_choice = input("Enter a card that you want to play: ")
                 # validatie here
                 print(f"You have chosen {player_card_choice}!")
-                self.hand.cards[player_card_choice].play_card() 
+                self.hand.cards_list[player_card_choice].play_card() 
 
                 self.hand.remove_card(player_choice)
             self.hand.add_card()

@@ -1,10 +1,10 @@
 import card
 class Hand:
     def __init__(self) -> None:
-        self.cards: list[card.Card] = []
+        self.cards_list: list[card.Card] = []
         pass
 
-    def display_hand_player(self):
+    def show_hand(self):
         final_top = ""
         final_bottom = ""
         final_side1 = ""
@@ -12,7 +12,7 @@ class Hand:
         final_suit_line = ""
         final_rank_line_right = ""
         final_rank_line_left = ""
-        for card in self.cards:
+        for card in self.cards_list:
             rank_str = card.icon
             suit = card.value
             top = "┌─────────┐"
@@ -38,8 +38,14 @@ class Hand:
         print(final_rank_line_right)
         print(final_bottom)
 
-    def remove_card(self, card_name):
+    def remove_card(self, choice: int):
         pass
 
     def add_card(self):
         pass
+
+    def play_card(self,choice: int):
+        played_card = self.cards_list[choice]
+        played_card.play_card()
+        self.remove_card(choice)
+

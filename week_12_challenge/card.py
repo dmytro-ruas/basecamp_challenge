@@ -16,7 +16,7 @@ class Card:
                 case "Shuffle":
                       self.shuffle()
                 case "Nope":
-                      self.nope(),
+                      self.nope()
                 case "Favor":
                       self.favor()
                 case "Bomb":
