@@ -1,0 +1,36 @@
+[
+    {
+        "Skip": {
+            "count" : 4,
+            "description" : "Immediately end your turn without drawing a card.",
+        },
+        "Attack" : {
+            "count" : 4,
+            "description" : "End your turn without drawing. Force the next player to take 2 turns."
+        },
+        "Defuse": {
+            "count" : 5,
+            "description" : "You don't explode, you can put the bomb back in the deck"
+        },
+        "Predict_Future": {
+            "count" : 5,
+            "description" : "Peek at the top 3 cards from the Draw Pile. Put them back in the same order."
+        },
+        "Shuffle" : {
+            "count" : 4,
+            "description" : "Shuffle the Draw Pile thoroughly."
+        },
+        "Nope" : {
+            "count" : 5,
+            "description" : "Stop any action except for an Exploding Kitten or a Defuse Card. Play at any time."
+        },
+        "Favor" : {
+            "count" : 4,
+            "description" : "Force any other player to give you 1 card from their hand. They choose which card."
+        },
+        "Bomb" : {
+            "count" : 4,
+            "description" : "If you don't defuse this bomb you will explode and die."
+        }
+    }
+]
