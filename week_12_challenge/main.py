@@ -18,13 +18,13 @@ def create_deck(player_count : int):
     deck_from_json = json_loader()
     game_deck: list[Card] = []
     for card in deck_from_json:
-        for name,info in card.items():
-            if name == "Defuse":
+        for value,info in card.items():
+            if value == "Defuse":
                 info["count"] -= player_count
-            if name == "Bomb":
+            if value == "Bomb":
                 info["count"] = player_count-1
             for x in range(0,info["count"]):
-                card_for_player_deck = Card(name,info['icon'])
+                card_for_player_deck = Card(value= value,icon= info['icon'],description= info["description"])
                 game_deck.append(card_for_player_deck)
     random.shuffle(game_deck)
     for card in game_deck:
