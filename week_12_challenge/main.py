@@ -14,7 +14,7 @@ def json_loader() -> list[dict]:
         deck = []
         return deck
 
-def create_deck(player_count : int):
+def create_deck(player_count : int) -> list[Card]:
     deck_from_json = json_loader()
     game_deck: list[Card] = []
     for card in deck_from_json:
@@ -27,8 +27,7 @@ def create_deck(player_count : int):
                 card_for_player_deck = Card(value= value,icon= info['icon'],description= info["description"])
                 game_deck.append(card_for_player_deck)
     random.shuffle(game_deck)
-    for card in game_deck:
-        print(card.icon)     
+    return game_deck    
 
 
 def start_game():
@@ -57,6 +56,21 @@ def start_game():
 def tutorial_view():
     pass
 
+def test():
+    deck = create_deck(2)
+    Test_Hand = Hand()
+    Test_Hand.show_hand()
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    deck = Test_Hand.add_card(deck)
+    Test_Hand.show_hand()
 
 if __name__ == "__main__":
-    start_game()
+    test()
+    #start_game()

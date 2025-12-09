@@ -22,16 +22,17 @@ class Hand:
             top = "┌─────────┐"
             bottom = "└─────────┘"
             side = "│         │"
-            card_number = f"   [{index}]   "
+            card_number = f"[{str(index)}]".center(11)
             icon_right = icon_str
             icon_left = icon_str
-            suit_line = f"│{value}│"
-            rank_line_left = f"│{icon_left}        │"
+            value = value.center(9)
+            value_line = f"│{value}│"
+            rank_line_left =  f"│{icon_left}        │"
             rank_line_right = f"│       {icon_right}│"
             final_top += top
             final_rank_line_left += rank_line_left
             final_side1 += side
-            final_suit_line += suit_line
+            final_suit_line += value_line
             final_side2 += side
             final_rank_line_right += rank_line_right
             final_bottom += bottom
@@ -67,15 +68,6 @@ class Hand:
         else:
             print("Invalid Choice")
 
-if __name__ == "__main__":
 
-    deck = [Card("Attack","🗡️","End your turn without drawing. Force the next player to take 2 turns."),Card("Predict_Future","👁️","Peek at the top 3 cards from the Draw Pile. Put them back in the same order."),Card("Shuffle","🔀","Shuffle the Draw Pile thoroughly.")]
-    random.shuffle(deck)
-    Test_Hand = Hand()
-    Test_Hand.show_hand()
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    Test_Hand.show_hand()
 
     

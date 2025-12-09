@@ -1,5 +1,4 @@
 import random
-import hand
 class Card:
     def __init__(self, value: str, icon: str, description: str) -> None:
         self.value = value
@@ -12,15 +11,16 @@ class Card:
         top = "┌─────────┐"
         bottom = "└─────────┘"
         side = "│         │"
-        rank_right = icon + ""
-        rank_left = "" + icon
-        suit_line = f"│    {value}    │"
+        rank_right = icon
+        rank_left = icon
+        value = value.center(11)
+        value_line = f"│{value}│"
         rank_line_left = f"│{rank_left}       │"
         rank_line_right = f"│       {rank_right}│"
         print(top)
         print(rank_line_left)
         print(side)
-        print(suit_line)
+        print(value_line)
         print(side)
         print(rank_line_right)
         print(bottom)
@@ -86,21 +86,6 @@ class Card:
                     deck = self.defuse(deck= deck)
                     defused_bomb = True
         return defused_bomb,deck
-
-if __name__ == "__main__":
-    deck = [Card("Attack","🗡️","End your turn without drawing. Force the next player to take 2 turns."),Card("Predict_Future","👁️","Peek at the top 3 cards from the Draw Pile. Put them back in the same order."),Card("Shuffle","🔀","Shuffle the Draw Pile thoroughly.")]
-    random.shuffle(deck)
-    Test_Hand = hand.Hand()
-    Test_Hand.show_hand()
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    Test_Hand.show_hand()
-
-
-    
-    
-
                      
 
 

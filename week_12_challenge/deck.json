@@ -15,7 +15,7 @@
             "description" : "You don't explode, you can put the bomb back in the deck",
             "icon" : "✂️"
         },
-        "Predict_Future": {
+        "Predict": {
             "count" : 5,
             "description" : "Peek at the top 3 cards from the Draw Pile. Put them back in the same order.",
             "icon" : "👁️"

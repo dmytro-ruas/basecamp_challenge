@@ -1,4 +1,4 @@
-import card, hand
+import hand
 
 class Player:
     def __init__(self,name: str,hand : hand.Hand) -> None:
