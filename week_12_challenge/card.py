@@ -32,7 +32,7 @@ class Card:
                 case "Attack":
                       self.attack()
                 case "Defuse":
-                      self.defuse(deck= deck, hand= hand)
+                      self.defuse(deck= deck)
                 case "Predict_Future":
                       self.predict_future()
                 case "Shuffle":
@@ -47,10 +47,11 @@ class Card:
 
     def skip(self):
         print(self.description)
-
+        return "skip"
     
     def attack(self):
         print(self.description)
+        return "attack"
     
     def defuse(self, deck: list) -> list:
         upper_limit = len(deck)
@@ -73,7 +74,7 @@ class Card:
     def favor(self):
         print(self.description)
 
-    def bomb(self, hand: list, deck: list) -> bool:
+    def bomb(self, hand: list, deck: list) -> tuple[bool,list]:
         defused_bomb = False
         print(self.description)
         defuse_index = -1
@@ -86,7 +87,5 @@ class Card:
                     deck = self.defuse(deck= deck)
                     defused_bomb = True
         return defused_bomb,deck
-                     
-
 
     
