@@ -73,7 +73,7 @@ class Card:
     def favor(self):
         print(self.description)
 
-    def bomb(self, hand: list, deck: list) -> bool:
+    def bomb(self, hand: list, deck: list) -> tuple[bool,list]:
         defused_bomb = False
         print(self.description)
         defuse_index = -1
