@@ -60,14 +60,18 @@ class Hand:
             deck.pop(0)
         return deck
 
-    def play_card(self,choice: int,deck: list[Card]) -> list[Card]:
-        if choice < len(self.cards_list)-1:
+    def play_card(self,choice: int,deck: list[Card]):
+        #here was len -1
+        if choice < len(self.cards_list):
             played_card = self.cards_list[choice]
             played_card.play_card(deck= deck, hand= self.cards_list)
+            if played_card.value == "Attack":
+                return "Attack"
+            if played_card.value == "Skip":
+                return "Skip"
             self.remove_card(choice)
         else:
             print("Invalid Choice")
-
 
 
     
