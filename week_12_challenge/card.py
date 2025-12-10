@@ -87,5 +87,4 @@ class Card:
                     hand.pop(defuse_index)
                     deck = self.defuse(deck= deck)
                     defused_bomb = True
-        return defused_bomb,deck
-                  
+        return defused_bomb,dec
