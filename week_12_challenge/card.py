@@ -1,4 +1,5 @@
 import random
+
 class Card:
     def __init__(self, value: str, icon: str, description: str) -> None:
         self.value = value
@@ -86,6 +87,5 @@ class Card:
                     hand.pop(defuse_index)
                     deck = self.defuse(deck= deck)
                     defused_bomb = True
-        return defused_bomb,deck
-
+        return defused_bomb,dec
     
