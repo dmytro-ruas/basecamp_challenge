@@ -68,8 +68,16 @@ class Game_logic:
   
         while len(alive_players) > 1:
             for player in self.players:
-                player.turns = 1
-                player.player_turn(deck)
 
+                if alive_players.index(player) + 1 == len(alive_players):
+                    next_player = alive_players[0]
+                else:
+                    next_player = alive_players[alive_players.index(player) + 1]
+
+                #next_player.turns += 1
+                player.turns += 1
+                player.player_turn(deck, next_player)
+
+            
             
     
