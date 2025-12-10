@@ -1,5 +1,6 @@
 from card import Card
 import random
+
 class Hand:
     def __init__(self) -> None:
         self.cards_list: list[Card] = [Card("Defuse","✂️","You don't explode, you can put the bomb back in the deck.")]
@@ -73,5 +74,3 @@ class Hand:
         else:
             print("Invalid Choice")
 
-
-    

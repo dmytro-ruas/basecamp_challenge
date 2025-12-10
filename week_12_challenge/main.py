@@ -34,17 +34,12 @@ from game_logic import Game_logic
 #     pass
 
 def test():
-    deck = create_deck(2)
-    Test_Hand = Hand()
-    Test_Hand2 = Hand()
-    Dmitry = Player("Dmitry",Test_Hand)
-    Christopher = Player("Christopher",Test_Hand2)
-    players = [Dmitry,Christopher]
-    for i in range(10):
-        for player in players:
-            player.turns = 1
-            player.player_turn(deck)
+    deck = [Card("Bomb","💥",'Defuse'),Card("Bomb","💥",'Defuse')]
+    Chris = Player("Chris",Hand())
+    Chris.player_turn(deck)
+
     
 if __name__ == "__main__":
-    game = Game_logic()
-    game.run_game()
+    #game = Game_logic()
+    #game.run_game()
+    test()

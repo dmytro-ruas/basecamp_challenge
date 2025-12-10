@@ -1,4 +1,5 @@
 import random
+
 class Card:
     def __init__(self, value: str, icon: str, description: str) -> None:
         self.value = value
@@ -34,7 +35,7 @@ class Card:
                 case "Defuse":
                       self.defuse(deck= deck)
                 case "Predict_Future":
-                      self.predict_future(deck=)
+                      self.predict_future()
                 case "Shuffle":
                       self.shuffle()
                 case "Nope":
@@ -87,5 +88,4 @@ class Card:
                     deck = self.defuse(deck= deck)
                     defused_bomb = True
         return defused_bomb,deck
-
-    
+                  
