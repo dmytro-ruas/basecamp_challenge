@@ -56,21 +56,7 @@ def start_game():
 def tutorial_view():
     pass
 
-def test():
-    deck = create_deck(2)
-    Test_Hand = Hand()
-    Test_Hand.show_hand()
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    deck = Test_Hand.add_card(deck)
-    Test_Hand.show_hand()
-
+    
 if __name__ == "__main__":
     test()
     #start_game()
